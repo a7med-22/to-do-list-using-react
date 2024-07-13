@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ToDoList from "./myComponents/ToDoList";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { ToDoContext } from "./contexts/toDoContext";
+import { useState } from "react";
+import { v4 as uniqueId } from "uuid";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Alexandria"],
+  },
+  palette: {
+    primary: {
+      main: "#00bfa5",
+    },
+  },
+});
+
+const initialToDos = [
+  {
+    id: uniqueId(),
+    title: "قراءه كتاب",
+    details: "يباشسنيﻻهصش",
+    isCompleted: false,
+  },
+];
 
 function App() {
+  const [toDos, setToDos] = useState(initialToDos);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div
+        className="App"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          direction: "rtl",
+          backgroundColor: "#191b1f",
+        }}
+      >
+        <ToDoContext.Provider value={{ toDos, setToDos }}>
+          <ToDoList />
+        </ToDoContext.Provider>
+      </div>
+    </ThemeProvider>
   );
 }
 

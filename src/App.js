@@ -2,9 +2,8 @@ import "./App.css";
 import ToDoList from "./myComponents/ToDoList";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
-import { ToDoContext } from "./contexts/toDoContext";
-import { useState } from "react";
-import { v4 as uniqueId } from "uuid";
+import { ToastProvider } from "./contexts/ToastContext";
+import ToDoProvider from "./contexts/toDoContext";
 
 const theme = createTheme({
   typography: {
@@ -17,35 +16,26 @@ const theme = createTheme({
   },
 });
 
-const initialToDos = [
-  {
-    id: uniqueId(),
-    title: "قراءه كتاب",
-    details: "يباشسنيﻻهصش",
-    isCompleted: false,
-  },
-];
-
 function App() {
-  const [toDos, setToDos] = useState(initialToDos);
-
   return (
     <ThemeProvider theme={theme}>
-      <div
-        className="App"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          direction: "rtl",
-          backgroundColor: "#191b1f",
-        }}
-      >
-        <ToDoContext.Provider value={{ toDos, setToDos }}>
-          <ToDoList />
-        </ToDoContext.Provider>
-      </div>
+      <ToDoProvider>
+        <ToastProvider>
+          <div
+            className="App"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+              direction: "rtl",
+              backgroundColor: "#191b1f",
+            }}
+          >
+            <ToDoList />
+          </div>
+        </ToastProvider>
+      </ToDoProvider>
     </ThemeProvider>
   );
 }

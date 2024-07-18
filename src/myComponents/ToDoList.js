@@ -79,7 +79,7 @@ export default function ToDoList() {
 
   useEffect(() => {
     dispatch({ type: "get" });
-  }, []);
+  }, [dispatch]);
 
   //=== related to toggle button
 
